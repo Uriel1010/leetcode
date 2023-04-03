@@ -1,5 +1,5 @@
 class Solution:
-    def numRescueBoats(self, people: List[int], limit: int) -> int:
+    def numRescueBoats(self, people: list[int], limit: int) -> int:
         """
         881. Boats to Save People
         Medium
@@ -28,31 +28,18 @@ class Solution:
         1 <= people.length <= 5 * 104
         1 <= people[i] <= limit <= 3 * 104
 
-        The time complexity of the given function numRescueBoats can be analyzed as follows:
-
-Sorting the input array people takes O(nlogn) time, where n is the length of the array.
-The function then iterates over the sorted people array once, and for each person, it tries to find a partner (if possible) whose combined weight is less than or equal to the given limit. This iteration takes O(n) time in the worst case, where n is the length of the array.
-For each boat, the function removes the people who have already been assigned to the boat from the input array. Removing an element from a list takes O(n) time in the worst case.
-Finally, the function returns the length of the boats list, which takes O(1) time.
-Therefore, the overall time complexity of the numRescueBoats function can be expressed as O(nlogn + n^2), which simplifies to O(n^2) in the worst case.
         """
-        tmp = sorted(people)[::-1]
-        boats = []
-        lim = limit
-        boat = []
-        while tmp != []:
-            boats.append(boat)
-            lim = limit
-            boat = []
-            for i in range(len(tmp)):
-                if lim >= tmp[i]:
-                    lim -= tmp[i]
-                    boat.append(tmp[i])
-                    if lim == 0:
-                        break
-            for j in range(len(boat)):
-                tmp.remove(boat[j])
-        return len(boats)
+        people.sort()
+        boats = 0
+        left, right = 0, len(people) - 1
+
+        while left <= right:
+            if people[left] + people[right] <= limit:
+                left += 1
+            right -= 1
+            boats += 1
+
+        return boats
 
 
 
@@ -61,6 +48,6 @@ Therefore, the overall time complexity of the numRescueBoats function can be exp
 
 if __name__=="__main__":
     h = Solution()
-    print(h.Boats_to_Save_People(people = [1,2], limit = 3))
-    print(h.Boats_to_Save_People(people = [3,2,2,1], limit = 3))
-    print(h.Boats_to_Save_People(people = [3,5,3,4], limit = 5))
+    print(h.numRescueBoats(people = [1,2], limit = 3))
+    print(h.numRescueBoats(people = [3,2,2,1], limit = 3))
+    print(h.numRescueBoats(people = [3,5,3,4], limit = 5))
