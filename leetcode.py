@@ -4,10 +4,7 @@ class Solution:
         881. Boats to Save People
         Medium
         You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most limit.
-
         Return the minimum number of boats to carry every given person.
-
-
 
         Example 1:
 
@@ -30,6 +27,14 @@ class Solution:
 
         1 <= people.length <= 5 * 104
         1 <= people[i] <= limit <= 3 * 104
+
+        The time complexity of the given function numRescueBoats can be analyzed as follows:
+
+Sorting the input array people takes O(nlogn) time, where n is the length of the array.
+The function then iterates over the sorted people array once, and for each person, it tries to find a partner (if possible) whose combined weight is less than or equal to the given limit. This iteration takes O(n) time in the worst case, where n is the length of the array.
+For each boat, the function removes the people who have already been assigned to the boat from the input array. Removing an element from a list takes O(n) time in the worst case.
+Finally, the function returns the length of the boats list, which takes O(1) time.
+Therefore, the overall time complexity of the numRescueBoats function can be expressed as O(nlogn + n^2), which simplifies to O(n^2) in the worst case.
         """
         tmp = sorted(people)[::-1]
         boats = []
