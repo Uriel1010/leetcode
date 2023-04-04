@@ -41,6 +41,40 @@ class Solution:
 
         return boats
 
+    def partitionString(self, s: str) -> int:
+        """
+        :param s:
+        :return:
+        Description: This function takes a string s as input and partitions the string
+        into as many substrings as possible so that each letter in the substring appears
+        only in that substring. It then returns the number of substrings created.
+
+        Time complexity: The time complexity of this function is O(n), where n is the
+        length of the input string. This is because the function iterates over each
+        character in the input string only once.
+        """
+        l = []
+        tmp = ''
+        for char in s:
+            if char not in tmp:
+                tmp+=char
+            else:
+                l.append(tmp)
+                tmp = char
+        l.append(tmp)
+        return len(l)
+
+    def search(self, nums: list[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return -1
 
 
 
@@ -48,6 +82,6 @@ class Solution:
 
 if __name__=="__main__":
     h = Solution()
-    print(h.numRescueBoats(people = [1,2], limit = 3))
-    print(h.numRescueBoats(people = [3,2,2,1], limit = 3))
+    print(h.search(nums = [-1,0,3,5,9,12], target = 9))
+    print(h.search(nums = [-1,0,3,5,9,12], target = 2))
     print(h.numRescueBoats(people = [3,5,3,4], limit = 5))
