@@ -76,12 +76,15 @@ class Solution:
                 right = mid - 1
         return -1
 
-
-
-
+    def prefixCount(self, words, pref):# List[str], pref: str) -> int:
+        """
+        Counts how many strings in the list 'words' start with the prefix 'pref'.
+        
+        :param words: A list of strings.
+        :param pref: The prefix to check against each string in words.
+        :return: The number of strings in 'words' that start with 'pref'.
+        """
+        return sum(word.startswith(pref) for word in words)
 
 if __name__=="__main__":
-    h = Solution()
-    print(h.search(nums = [-1,0,3,5,9,12], target = 9))
-    print(h.search(nums = [-1,0,3,5,9,12], target = 2))
-    print(h.numRescueBoats(people = [3,5,3,4], limit = 5))
+    pass
