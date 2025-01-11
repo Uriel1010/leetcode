@@ -86,5 +86,21 @@ class Solution:
         """
         return sum(word.startswith(pref) for word in words)
 
+    def canConstruct(self, s, k):
+        n = len(s)
+        if k > n:
+            return False      # cannot split into more parts than characters
+        
+        # Count frequency of each character
+        freq = [0] * 26  # for 'a' to 'z'
+        for char in s:
+            freq[ord(char) - ord('a')] += 1
+
+        # Count how many characters have odd frequency
+        odd_count = sum(f % 2 for f in freq)
+
+        # We need odd_count <= k <= n
+        return odd_count <= k <= n
+
 if __name__=="__main__":
     pass
