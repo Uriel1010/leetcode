@@ -102,5 +102,20 @@ class Solution:
         # We need odd_count <= k <= n
         return odd_count <= k <= n
 
+    def findThePrefixCommonArray(self, A, B):
+        n = len(A)
+        seenA = set()
+        seenB = set()
+        result = []
+
+        for i in range(n):
+            seenA.add(A[i])
+            seenB.add(B[i])
+            # Number of common elements so far is the size of the intersection
+            result.append(len(seenA & seenB))
+        
+        return result
+
+        
 if __name__=="__main__":
     pass
