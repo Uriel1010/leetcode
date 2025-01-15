@@ -116,6 +116,43 @@ class Solution:
         
         return result
 
+    def minimizeXor(self, num1, num2):
+        # Function to count the number of set bits in a number
+        def count_set_bits(x):
+            count = 0
+            while x:
+                count += x & 1
+                x >>= 1
+            return count
         
+        # Count the number of set bits in num2
+        k = count_set_bits(num2)
+        
+        # Count the number of set bits in num1
+        t = count_set_bits(num1)
+        
+        x = num1  # Initialize x with num1
+        
+        if t > k:
+            # Need to turn off (t - k) set bits in x
+            bits_to_turn_off = t - k
+            for i in range(32):
+                if x & (1 << i):
+                    x ^= (1 << i)  # Flip the bit from 1 to 0
+                    bits_to_turn_off -= 1
+                    if bits_to_turn_off == 0:
+                        break
+        elif t < k:
+            # Need to turn on (k - t) bits in x
+            bits_to_turn_on = k - t
+            for i in range(32):
+                if not (x & (1 << i)):
+                    x |= (1 << i)  # Flip the bit from 0 to 1
+                    bits_to_turn_on -= 1
+                    if bits_to_turn_on == 0:
+                        break
+        # If t == k, x remains num1, which already has the desired number of set bits
+        
+        return x
 if __name__=="__main__":
     pass
