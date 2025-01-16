@@ -154,5 +154,29 @@ class Solution:
         # If t == k, x remains num1, which already has the desired number of set bits
         
         return x
+
+    def xorAllNums(self, nums1, nums2):
+        # XOR of all elements in nums1
+        xor1 = 0
+        for x in nums1:
+            xor1 ^= x
+        
+        # XOR of all elements in nums2
+        xor2 = 0
+        for x in nums2:
+            xor2 ^= x
+        
+        # Final result
+        result = 0
+        
+        # If nums2 has odd length, include xor1
+        if len(nums2) % 2 == 1:
+            result ^= xor1
+        
+        # If nums1 has odd length, include xor2
+        if len(nums1) % 2 == 1:
+            result ^= xor2
+        
+        return result
 if __name__=="__main__":
     pass
