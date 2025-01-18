@@ -178,5 +178,79 @@ class Solution:
             result ^= xor2
         
         return result
+
+        def minCost(self, grid):
+            m, n = len(grid), len(grid[0])
+            INF = float('inf')
+            
+            # Distances array
+            dist = [[INF]*n for _ in range(m)]
+            dist[0][0] = 0
+            
+            # Directions keyed by the sign value:
+            # 1 → (0, 1), 2 → (0, -1), 3 → (1, 0), 4 → (-1, 0)
+            directions = {
+                1: (0, 1),
+                2: (0, -1),
+                3: (1, 0),
+                4: (-1, 0)
+            }
+            
+            # Custom double-ended queue (0-1 BFS) without using imports
+            class CustomDeque:
+                def __init__(self, size):
+                    # We allocate 2*size so we can pushLeft without re-allocating
+                    self.q = [None]*(2*size)
+                    # mid is the "middle" index, so we have space on both ends
+                    self.mid = size
+                    self.head = size  # front pointer
+                    self.tail = size  # back pointer
+
+                def pushLeft(self, item):
+                    self.head -= 1
+                    self.q[self.head] = item
+
+                def pushRight(self, item):
+                    self.q[self.tail] = item
+                    self.tail += 1
+
+                def popLeft(self):
+                    item = self.q[self.head]
+                    self.head += 1
+                    return item
+
+                def isEmpty(self):
+                    return self.head == self.tail
+
+            # Set up our custom deque
+            dq = CustomDeque(m*n + 1)
+            dq.pushRight((0, 0))
+
+            # 0-1 BFS
+            while not dq.isEmpty():
+                r, c = dq.popLeft()
+                if r == m - 1 and c == n - 1:
+                    return dist[r][c]  # Found the bottom-right cell with minimal cost
+                
+                current_dist = dist[r][c]
+                
+                # Explore all 4 possible directions
+                for sign, (dr, dc) in directions.items():
+                    nr, nc = r + dr, c + dc
+                    # Only proceed if inside the grid
+                    if 0 <= nr < m and 0 <= nc < n:
+                        # If the direction matches grid[r][c], cost = 0, else cost = 1
+                        cost = 0 if sign == grid[r][c] else 1
+                        new_dist = current_dist + cost
+                        if new_dist < dist[nr][nc]:
+                            dist[nr][nc] = new_dist
+                            # 0 cost edges go to the front, 1 cost edges go to the back
+                            if cost == 0:
+                                dq.pushLeft((nr, nc))
+                            else:
+                                dq.pushRight((nr, nc))
+
+            # If never reached (m-1, n-1) for some reason, return dist anyway
+            return dist[m-1][n-1]
 if __name__=="__main__":
     pass
