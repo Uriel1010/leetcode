@@ -252,5 +252,46 @@ class Solution:
 
             # If never reached (m-1, n-1) for some reason, return dist anyway
             return dist[m-1][n-1]
+
+    def gridGame(self, grid):
+        n = len(grid[0])
+        
+        # If there's only one column, Robot 2 can only collect 0
+        # because Robot 1 will zero out the single cell (0,0) -> (1,0).
+        if n == 1:
+            return 0
+        
+        top = grid[0]
+        bottom = grid[1]
+        
+        # Compute prefix sums
+        # topPrefix[i] = sum of top[0..i-1], bottomPrefix[i] = sum of bottom[0..i-1]
+        topPrefix = [0] * (n+1)
+        bottomPrefix = [0] * (n+1)
+        
+        for i in range(n):
+            topPrefix[i+1] = topPrefix[i] + top[i]
+            bottomPrefix[i+1] = bottomPrefix[i] + bottom[i]
+        
+        # We'll try all possible 'c' where Robot 1 goes down
+        # and pick the minimal max(...) for Robot 2's best response.
+        ans = float('inf')
+        
+        for c in range(n):
+            # Sum on top row AFTER column c: columns [c+1..n-1]
+            # i.e. topPrefix[n] - topPrefix[c+1]
+            score_top = topPrefix[n] - topPrefix[c+1] if c+1 <= n else 0
+            
+            # Sum on bottom row BEFORE column c: columns [0..c-1]
+            # i.e. bottomPrefix[c]
+            score_bottom = bottomPrefix[c]
+            
+            # Robot 2 picks the bigger segment
+            second_robot_score = max(score_top, score_bottom)
+            
+            ans = min(ans, second_robot_score)
+        
+        return ans
+
 if __name__=="__main__":
     pass
