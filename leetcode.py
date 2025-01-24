@@ -293,5 +293,35 @@ class Solution:
         
         return ans
 
+    def eventualSafeNodes(self, graph):
+        n = len(graph)
+        color = [0] * n  # 0: unprocessed, 1: processing, 2: safe, 3: unsafe
+        
+        for i in range(n):
+            if color[i] == 0:
+                stack = [(i, False)]
+                while stack:
+                    node, processed = stack.pop()
+                    if not processed:
+                        if color[node] != 0:
+                            continue
+                        color[node] = 1
+                        stack.append((node, True))
+                        # Push neighbors in reverse order to maintain the order of processing
+                        for neighbor in reversed(graph[node]):
+                            if color[neighbor] == 0:
+                                stack.append((neighbor, False))
+                    else:
+                        # Check if all neighbors are safe
+                        safe = True
+                        for neighbor in graph[node]:
+                            if color[neighbor] != 2:
+                                safe = False
+                                break
+                        if safe:
+                            color[node] = 2
+                        else:
+                            color[node] = 3
+        return [i for i in range(n) if color[i] == 2]        
 if __name__=="__main__":
     pass
