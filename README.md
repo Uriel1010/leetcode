@@ -1,6 +1,3 @@
-Here's an improved version of the README.md with better organization, clarity, and visual elements:
-
-```markdown
 # LeetCode Solutions in Python 🚀
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
