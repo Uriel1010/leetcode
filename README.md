@@ -147,12 +147,11 @@ def eventualSafeNodes(self, graph: list[list[int]]) -> list[int]:
 
 <a name="contact"></a>
 ## 📬 Contact
-**Author**: Your Name  
-**Email**: your.email@domain.com  
-**LinkedIn**: [Your Profile](https://linkedin.com/in/yourprofile)  
-**LeetCode**: [Your Profile](https://leetcode.com/yourprofile)
+**Author**: Uriel Manzur 
+**Email**: uriel1010@gmail.com
+**LinkedIn**: [Your Profile](https://www.linkedin.com/in/uriel-manzur/)  
 
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/leetcode-solutions?style=social)](https://github.com/yourusername/leetcode-solutions)
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/leetcode-solutions?style=social)](https://github.com/Uriel1010/leetcode)
 ```
 
 **Key Improvements**:
