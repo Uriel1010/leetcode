@@ -323,5 +323,32 @@ class Solution:
                         else:
                             color[node] = 3
         return [i for i in range(n) if color[i] == 2]        
+
+    def lexicographicallySmallestArray(self, nums, limit):
+        sorted_pairs = sorted((num, i) for i, num in enumerate(nums))
+        n = len(nums)
+        if n == 0:
+            return []
+        
+        groups = []
+        current_group = [sorted_pairs[0]]
+        for i in range(1, n):
+            if sorted_pairs[i][0] - sorted_pairs[i-1][0] <= limit:
+                current_group.append(sorted_pairs[i])
+            else:
+                groups.append(current_group)
+                current_group = [sorted_pairs[i]]
+        groups.append(current_group)  # Add the last group
+        
+        res = [0] * n
+        for group in groups:
+            indices = [i for (val, i) in group]
+            sorted_indices = sorted(indices)
+            values = [val for (val, i) in group]
+            for idx, val in zip(sorted_indices, values):
+                res[idx] = val
+        
+        return res
+    
 if __name__=="__main__":
     pass
