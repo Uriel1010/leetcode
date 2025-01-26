@@ -350,5 +350,80 @@ class Solution:
         
         return res
     
+    def maximumInvitations(self, favorite):
+        n = len(favorite)
+        
+        # 1) Find all cycles and track the length of the longest cycle.
+        #    We'll use a DFS approach with 'visited' states:
+        #    0 = not visited, 1 = visiting (in stack), 2 = visited (done).
+        visited = [0] * n
+        # 'depth' will track the depth in DFS to calculate cycle length.
+        depth = [0] * n
+        max_cycle_len = 0
+
+        def dfs(u, current_depth):
+            nonlocal max_cycle_len
+            visited[u] = 1
+            depth[u] = current_depth
+            v = favorite[u]
+            
+            if visited[v] == 0:
+                dfs(v, current_depth + 1)
+            elif visited[v] == 1:
+                # A cycle is found: cycle length = current_depth - depth[v] + 1
+                cycle_length = current_depth - depth[v] + 1
+                max_cycle_len = max(max_cycle_len, cycle_length)
+            # Mark as fully visited
+            visited[u] = 2
+
+        for i in range(n):
+            if visited[i] == 0:
+                dfs(i, 0)
+
+        # 2) Calculate the chain lengths that lead into each node (for 2-cycles).
+        #    We'll:
+        #    - Build in-degree array.
+        #    - Use a queue (Kahn's Algorithm style) for nodes with in-degree = 0.
+        #    - chain_len[u] = length of the longest path ending at u (ignoring cycles).
+        in_degree = [0] * n
+        for i in range(n):
+            in_degree[favorite[i]] += 1
+        
+        chain_len = [0] * n
+        from collections import deque
+        q = deque()
+
+        # Enqueue nodes with in-degree 0
+        for i in range(n):
+            if in_degree[i] == 0:
+                q.append(i)
+
+        # Process all nodes with in-degree 0
+        while q:
+            u = q.popleft()
+            v = favorite[u]
+            # We can extend the chain of u by 1 to get to v
+            chain_len[v] = max(chain_len[v], chain_len[u] + 1)
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                q.append(v)
+
+        # 3) Sum up chain lengths for all 2-cycles:
+        #    If i and j form a 2-cycle, we add chain_len[i] + chain_len[j] + 2
+        #    to a running total. We then take the maximum between this sum
+        #    (for all 2-cycles) and max_cycle_len.
+        two_cycle_sum = 0
+        visited_2cycle = [False] * n
+        for i in range(n):
+            j = favorite[i]
+            # Check i < j to avoid double-counting the same pair
+            if favorite[j] == i and i < j:
+                # Mark as visited in 2-cycle so we don't double count
+                visited_2cycle[i] = True
+                visited_2cycle[j] = True
+                two_cycle_sum += (chain_len[i] + chain_len[j] + 2)
+
+        return max(max_cycle_len, two_cycle_sum)
+
 if __name__=="__main__":
     pass
