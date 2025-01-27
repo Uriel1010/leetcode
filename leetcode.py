@@ -425,5 +425,31 @@ class Solution:
 
         return max(max_cycle_len, two_cycle_sum)
 
+    def checkIfPrerequisite(self, numCourses,
+                            prerequisites,
+                            queries):
+        # Step 1: Initialize a reachability matrix
+        reachable = [[False] * numCourses for _ in range(numCourses)]
+        
+        # Step 2: Mark direct prerequisites as reachable
+        for pre, course in prerequisites:
+            reachable[pre][course] = True
+        
+        # Step 3: Compute transitive closure using Floyd-Warshall style
+        for k in range(numCourses):
+            for i in range(numCourses):
+                # If i->k isn't reachable, no need to proceed
+                if not reachable[i][k]:
+                    continue
+                for j in range(numCourses):
+                    # If k->j is reachable, then i->j is reachable
+                    if reachable[k][j]:
+                        reachable[i][j] = True
+        
+        # Step 4: Answer queries
+        # If u -> v is reachable, then u is a prerequisite of v
+        return [reachable[u][v] for u, v in queries]
+
+
 if __name__=="__main__":
     pass

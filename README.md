@@ -19,36 +19,53 @@ This repository contains **optimized Python solutions** for LeetCode problems, f
 - ⚡ Time/space complexity analysis for each solution
 - 🎯 Optimal algorithms using modern Python features
 - 🔗 LeetCode problem links for quick reference
-- 🌐 Covers array, string, graph, and bit manipulation problems
+- 🌐 Covers arrays, strings, graphs, and bit manipulation problems
 
 <a name="problem-list"></a>
 ## 🧩 Problem List
 
-| # | Problem | Difficulty | Key Technique | LeetCode Link |
-|---|---------|------------|---------------|---------------|
-| 1 | Boats to Save People | Medium | Two Pointers | [881](https://leetcode.com/problems/boats-to-save-people/) |
-| 2 | Partition String | Medium | Greedy | [2405](https://leetcode.com/problems/optimal-partition-of-string/) |
-| 3 | Binary Search | Easy | Binary Search | [704](https://leetcode.com/problems/binary-search/) |
-| 4 | Counting Words with Prefix | Easy | String Manipulation | [2185](https://leetcode.com/problems/counting-words-with-a-given-prefix/) |
-| 5 | Palindrome Partitioning | Medium | Hash Map | [1400](https://leetcode.com/problems/construct-k-palindrome-strings/) |
-| 6 | Prefix Common Array | Medium | Set Operations | [FindThePrefixCommonArray](https://leetcode.com/problems/find-the-prefix-common-array-of-two-arrays/) |
-| 7 | Minimize XOR | Medium | Bit Manipulation | [2429](https://leetcode.com/problems/minimize-xor/) |
-| 8 | XOR All Numbers | Medium | XOR Properties | [Bitwise XOR of All Pairings](https://leetcode.com/problems/bitwise-xor-of-all-pairings/) |
-| 9 | Minimum Cost Grid Path | Hard | 0-1 BFS | [1368](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/) |
-| 10 | Eventual Safe Nodes | Medium | Graph DFS | [802](https://leetcode.com/problems/find-eventual-safe-nodes/) |
+| #   | Function Name                       | LeetCode Problem                                              | Difficulty | Key Technique        | Link                                                                              |
+|-----|-------------------------------------|---------------------------------------------------------------|------------|----------------------|-----------------------------------------------------------------------------------|
+| 1   | `numRescueBoats`                   | **Boats to Save People** (#881)                              | Medium     | Two Pointers         | [881](https://leetcode.com/problems/boats-to-save-people/)                       |
+| 2   | `partitionString`                  | **Optimal Partition of String** (#2405)                      | Medium     | Greedy               | [2405](https://leetcode.com/problems/optimal-partition-of-string/)               |
+| 3   | `search`                           | **Binary Search** (#704)                                     | Easy       | Binary Search        | [704](https://leetcode.com/problems/binary-search/)                              |
+| 4   | `prefixCount`                      | **Counting Words With a Given Prefix** (#2185)               | Easy       | String Manipulation  | [2185](https://leetcode.com/problems/counting-words-with-a-given-prefix/)        |
+| 5   | `canConstruct`                     | **Construct K Palindrome Strings** (#1400)                   | Medium     | Character Counting   | [1400](https://leetcode.com/problems/construct-k-palindrome-strings/)            |
+| 6   | `findThePrefixCommonArray`         | **Find the Prefix Common Array** (#2657)                     | Medium     | Set Operations       | [2657](https://leetcode.com/problems/find-the-prefix-common-array-of-two-arrays/)|
+| 7   | `minimizeXor`                      | **Minimize XOR** (#2429)                                     | Medium     | Bit Manipulation     | [2429](https://leetcode.com/problems/minimize-xor/)                              |
+| 8   | `xorAllNums`                       | **Bitwise XOR of All Pairings** (#2575)                      | Medium     | XOR Properties       | [2575](https://leetcode.com/problems/bitwise-xor-of-all-pairings/)               |
+| 9   | `minCost`                          | **Minimum Cost to Make at Least One Valid Path in a Grid** (#1368) | Hard  | 0-1 BFS + Graph      | [1368](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/) |
+| 10  | `gridGame`                         | **Grid Game** (#2017)                                        | Medium     | Prefix Sums          | [2017](https://leetcode.com/problems/grid-game/)                                 |
+| 11  | `eventualSafeNodes`                | **Find Eventual Safe Nodes** (#802)                          | Medium     | Graph DFS            | [802](https://leetcode.com/problems/find-eventual-safe-nodes/)                   |
+| 12  | `lexicographicallySmallestArray`*  | *(Custom / Example Function)*                                | N/A        | Sorting + Grouping   | *(No official link)*                                                              |
+| 13  | `maximumInvitations`               | **Maximum Employees to Be Invited to a Meeting** (#2127)     | Hard       | Graph + Cycles       | [2127](https://leetcode.com/problems/maximum-employees-to-be-invited-to-a-meeting/) |
+| 14  | `checkIfPrerequisite`              | **Course Schedule IV** (#1462)                               | Medium     | Floyd-Warshall / Graph | [1462](https://leetcode.com/problems/course-schedule-iv/)                      |
+
+> *`lexicographicallySmallestArray` is a custom demo function not tied to an official LeetCode problem number.
 
 <a name="installation"></a>
 ## 🛠️ Installation
-```bash
-git clone https://github.com/yourusername/leetcode-solutions.git
-cd leetcode-solutions
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate  # Windows
-```
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/leetcode-solutions.git
+   cd leetcode-solutions
+   ```
+2. **Set Up a Virtual Environment (Optional)**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate   # Linux/Mac
+   # or
+   venv\Scripts\activate      # Windows
+   ```
+3. **Install Dependencies** (if any):
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 <a name="solution-breakdown"></a>
 ## 🔍 Solution Breakdown
+
+Below are brief overviews of selected solutions from the code. Full details can be found in the source files.
 
 ### 1. Boats to Save People 🚤
 ```python
@@ -63,15 +80,19 @@ def numRescueBoats(self, people: list[int], limit: int) -> int:
         boats += 1
     return boats
 ```
-**Approach**: Greedy two-pointer technique after sorting  
-**Complexity**: O(n log n) time, O(1) space  
-**Example**:
-```python
->>> Solution().numRescueBoats([3,2,2,1], 3)
-3
-```
+**Approach**:  
+- Sort the array and use two pointers (`left` and `right`).
+- Pair the heaviest person (`right`) with the lightest person (`left`) if possible.
+- If they can’t fit together, send the heaviest alone.
+- In either case, move `right` leftward by one and increment `boats`.
 
-### 2. Optimal String Partition ✂️
+**Complexity**:  
+- Time: O(n log n) due to sorting.  
+- Space: O(1) extra space.
+
+---
+
+### 2. Optimal Partition of String ✂️
 ```python
 def partitionString(self, s: str) -> int:
     partitions = []
@@ -85,16 +106,22 @@ def partitionString(self, s: str) -> int:
     partitions.append(current)
     return len(partitions)
 ```
-**Approach**: Greedy partitioning with character tracking  
-**Complexity**: O(n) time, O(n) space  
-**Edge Case**: All unique characters → 1 partition
+**Idea**:  
+- Greedily build a substring until a repeating character is found.
+- Once a repeat occurs, start a new partition.
 
-### 3. Binary Search 🔍
+**Complexity**:  
+- Time: O(n), where n is the length of `s`.  
+- Space: O(n) for storing partitions in the worst case.
+
+---
+
+### 3. Binary Search 🔎
 ```python
 def search(self, nums: list[int], target: int) -> int:
-    left, right = 0, len(nums)-1
+    left, right = 0, len(nums) - 1
     while left <= right:
-        mid = (left+right)//2
+        mid = (left + right) // 2
         if nums[mid] == target:
             return mid
         elif nums[mid] < target:
@@ -103,68 +130,117 @@ def search(self, nums: list[int], target: int) -> int:
             right = mid - 1
     return -1
 ```
-**Complexity**: O(log n) time, O(1) space  
-**Variants**: Handles both ascending and descending orders
+**Approach**: Standard binary search.  
+**Complexity**:
+- Time: O(log n).  
+- Space: O(1).
 
-### 8. XOR All Pairings 🧮
+---
+
+### 8. Bitwise XOR of All Pairings
 ```python
 def xorAllNums(self, nums1: list[int], nums2: list[int]) -> int:
-    xor1 = reduce(lambda a,b: a^b, nums1, 0)
-    xor2 = reduce(lambda a,b: a^b, nums2, 0)
-    return (xor1 * (len(nums2)%2)) ^ (xor2 * (len(nums1)%2))
+    xor1 = 0
+    for x in nums1:
+        xor1 ^= x
+    xor2 = 0
+    for x in nums2:
+        xor2 ^= x
+    
+    result = 0
+    if len(nums2) % 2 == 1:
+        result ^= xor1
+    if len(nums1) % 2 == 1:
+        result ^= xor2
+    return result
 ```
-**Key Insight**: XOR cancellation based on array parity  
-**Complexity**: O(n+m) time, O(1) space
+**Insight**:  
+- If an array has an odd number of elements, each element in the other array will XOR with it once more than if it had an even count.
 
-### 10. Eventual Safe Nodes 🛡️
+**Complexity**:  
+- Time: O(n + m).  
+- Space: O(1).
+
+---
+
+### 11. Find Eventual Safe Nodes 🛡
 ```python
 def eventualSafeNodes(self, graph: list[list[int]]) -> list[int]:
     n = len(graph)
-    color = [0] * n  # 0:unvisited, 1:visiting, 2:safe
+    color = [0] * n  # 0=unvisited, 1=visiting, 2=safe, 3=unsafe
     
-    def is_safe(node):
-        if color[node] > 0:
+    def dfs(node):
+        if color[node] != 0:
             return color[node] == 2
         color[node] = 1
         for neighbor in graph[node]:
-            if not is_safe(neighbor):
+            if color[neighbor] == 1 or (color[neighbor] == 0 and not dfs(neighbor)):
+                color[node] = 3  # unsafe
                 return False
-        color[node] = 2
+        color[node] = 2  # safe
         return True
     
-    return [i for i in range(n) if is_safe(i)]
+    return [i for i in range(n) if dfs(i)]
 ```
-**Approach**: DFS with cycle detection  
-**Complexity**: O(n+e) time, O(n) space
+**Approach**:  
+- Use DFS and a coloring system to detect cycles.  
+- Nodes that end up in cycles are unsafe; others are safe.
+
+**Complexity**:  
+- Time: O(n + e) where e is the number of edges.  
+- Space: O(n) for recursion stack/visited states.
+
+---
+
+### 14. Course Schedule IV
+```python
+def checkIfPrerequisite(self, numCourses, prerequisites, queries):
+    # Step 1: Initialize a reachability matrix
+    reachable = [[False]*numCourses for _ in range(numCourses)]
+    
+    # Step 2: Mark direct prerequisites
+    for pre, course in prerequisites:
+        reachable[pre][course] = True
+    
+    # Step 3: Floyd-Warshall for transitive closure
+    for k in range(numCourses):
+        for i in range(numCourses):
+            if reachable[i][k]:
+                for j in range(numCourses):
+                    if reachable[k][j]:
+                        reachable[i][j] = True
+    
+    # Step 4: Answer queries
+    return [reachable[u][v] for u, v in queries]
+```
+**Approach**:  
+- Build a `reachable[i][j]` table.
+- Apply the Floyd-Warshall-like approach for transitive closure in O(n³).
+- Answer each query in O(1).
+
+**Complexity**:  
+- Time: O(n³ + q).
+- Space: O(n²).
+
+---
 
 <a name="contributing"></a>
 ## 🤝 Contributing
-1. Fork the repository
+1. **Fork** the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
 <a name="contact"></a>
 ## 📬 Contact
-**Author**: Uriel Manzur 
-**Email**: uriel1010@gmail.com
-**LinkedIn**: [Your Profile](https://www.linkedin.com/in/uriel-manzur/)  
+**Author**: Uriel Manzur  
+**Email**: [uriel1010@gmail.com](mailto:uriel1010@gmail.com)  
+**LinkedIn**: [Uriel Manzur](https://www.linkedin.com/in/uriel-manzur/)
 
 [![GitHub Stars](https://img.shields.io/github/stars/yourusername/leetcode-solutions?style=social)](https://github.com/Uriel1010/leetcode)
-```
 
-**Key Improvements**:
-1. Added badges for visual appeal and quick info
-2. Created a sortable problem table with LeetCode links
-3. Improved code examples with syntax highlighting
-4. Added emojis for better visual hierarchy
-5. Included contribution guidelines
-6. Added social media links and badges
-7. Standardized solution documentation format
-8. Added environment setup instructions
-9. Included more problem-specific examples
-10. Added key technique categorization
-11. Improved navigation with anchor links
-12. Made mobile-friendly with proper markdown formatting
+---
 
+> **License**: This project is licensed under the [MIT License](LICENSE).  
+> Feel free to use and modify these solutions for your own learning or interview prep!
