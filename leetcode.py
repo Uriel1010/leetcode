@@ -450,6 +450,33 @@ class Solution:
         # If u -> v is reachable, then u is a prerequisite of v
         return [reachable[u][v] for u, v in queries]
 
+    def findMaxFish(self, grid):
+        m, n = len(grid), len(grid[0])
+        visited = [[False]*n for _ in range(m)]
+        
+        def dfs(r, c):
+            stack = [(r, c)]
+            total = 0
+            visited[r][c] = True
+            while stack:
+                x, y = stack.pop()
+                total += grid[x][y]  # sum the fish in the current cell
+                for dx, dy in [(1,0), (-1,0), (0,1), (0,-1)]:
+                    nx, ny = x+dx, y+dy
+                    if 0 <= nx < m and 0 <= ny < n:
+                        if not visited[nx][ny] and grid[nx][ny] > 0:
+                            visited[nx][ny] = True
+                            stack.append((nx, ny))
+            return total
+        
+        max_fish = 0
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] > 0 and not visited[r][c]:
+                    # Perform DFS on each unvisited water cell
+                    max_fish = max(max_fish, dfs(r, c))
+        
+        return max_fish
 
 if __name__=="__main__":
     pass
