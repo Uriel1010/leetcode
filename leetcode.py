@@ -478,5 +478,46 @@ class Solution:
         
         return max_fish
 
+    def findRedundantConnection(self, edges):
+        # Union-Find helper functions
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])  # path compression
+            return parent[x]
+        
+        def union(a, b):
+            rootA = find(a)
+            rootB = find(b)
+            
+            if rootA == rootB:
+                return False  # a and b are already in the same set
+            
+            # union by rank
+            if rank[rootA] > rank[rootB]:
+                parent[rootB] = rootA
+            elif rank[rootA] < rank[rootB]:
+                parent[rootA] = rootB
+            else:
+                parent[rootB] = rootA
+                rank[rootA] += 1
+            
+            return True
+
+        n = len(edges)
+        # Each node is initially its own parent
+        parent = list(range(n+1))
+        rank = [0] * (n+1)
+        
+        # Variable to store the last redundant edge
+        last_cycle_edge = None
+        
+        # Process edges in the order they're given
+        for u, v in edges:
+            if not union(u, v): 
+                # If union() returns False, u & v are already connected -> cycle
+                last_cycle_edge = [u, v]
+        
+        return last_cycle_edge
+
 if __name__=="__main__":
     pass
