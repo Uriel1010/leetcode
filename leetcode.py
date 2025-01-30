@@ -519,5 +519,103 @@ class Solution:
         
         return last_cycle_edge
 
+    def magnificentSets(self, n, edges):
+        # Build adjacency list (0-based)
+        graph = [[] for _ in range(n)]
+        for e in edges:
+            u, v = e[0]-1, e[1]-1
+            graph[u].append(v)
+            graph[v].append(u)
+
+        visited = [False] * n
+
+        # 1) Gather each connected component with a simple DFS
+        def get_component(start):
+            stack = [start]
+            comp = []
+            visited[start] = True
+            while stack:
+                node = stack.pop()
+                comp.append(node)
+                for nei in graph[node]:
+                    if not visited[nei]:
+                        visited[nei] = True
+                        stack.append(nei)
+            return comp
+
+        # 2) Check bipartite with 2-coloring
+        #    Return False if the subgraph of comp_nodes isn't bipartite.
+        def is_bipartite(comp_nodes):
+            color = [-1]*n
+            for nd in comp_nodes:
+                if color[nd] == -1:  # not colored yet
+                    color[nd] = 0
+                    queue = [nd]  # BFS with a list
+                    q_index = 0
+                    while q_index < len(queue):
+                        cur = queue[q_index]
+                        q_index += 1
+                        for nei in graph[cur]:
+                            if nei in comp_set:  # only relevant inside this component
+                                if color[nei] == -1:
+                                    color[nei] = 1 - color[cur]
+                                    queue.append(nei)
+                                elif color[nei] == color[cur]:
+                                    return False
+            return True
+
+        # 3) Attempt BFS layering from a given root.
+        #    If valid layering, return max level; otherwise return -1.
+        def bfs_layering(root):
+            queue = [root]
+            level = {root: 0}
+            max_level = 0
+            q_index = 0
+            while q_index < len(queue):
+                cur = queue[q_index]
+                q_index += 1
+                cur_lv = level[cur]
+                if cur_lv > max_level:
+                    max_level = cur_lv
+
+                for nei in graph[cur]:
+                    if nei in comp_set:  # edges within the component
+                        if nei not in level:
+                            level[nei] = cur_lv + 1
+                            queue.append(nei)
+                        # Check layering condition
+                        if abs(level[nei] - level[cur]) != 1:
+                            return -1  # invalid layering
+            # If no edge violated the condition, layering is valid
+            return max_level
+
+        total_groups = 0
+
+        # Process each connected component
+        for i in range(n):
+            if not visited[i]:
+                comp_nodes = get_component(i)
+                comp_set = set(comp_nodes)
+
+                # Check bipartite
+                if not is_bipartite(comp_nodes):
+                    return -1
+
+                best_for_this_comp = -1
+                # Try BFS layering from *every node* in the component
+                for node in comp_nodes:
+                    max_lv = bfs_layering(node)
+                    if max_lv >= 0 and max_lv > best_for_this_comp:
+                        best_for_this_comp = max_lv
+
+                # If no valid BFS layering from any node, return -1
+                if best_for_this_comp == -1:
+                    return -1
+
+                # best_for_this_comp + 1 is the number of groups
+                total_groups += (best_for_this_comp + 1)
+
+        return total_groups
+
 if __name__=="__main__":
     pass
