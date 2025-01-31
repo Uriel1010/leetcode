@@ -617,5 +617,45 @@ class Solution:
 
         return total_groups
 
+    def largestIsland(self, grid):
+        n = len(grid)
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        island_id = 2
+        sizes = {}
+        
+        # Mark each island with a unique ID and calculate its size
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    stack = [(i, j)]
+                    grid[i][j] = island_id
+                    size = 0
+                    while stack:
+                        x, y = stack.pop()
+                        size += 1
+                        for dx, dy in directions:
+                            nx, ny = x + dx, y + dy
+                            if 0 <= nx < n and 0 <= ny < n and grid[nx][ny] == 1:
+                                grid[nx][ny] = island_id
+                                stack.append((nx, ny))
+                    sizes[island_id] = size
+                    island_id += 1
+        
+        max_size = max(sizes.values()) if sizes else 0
+        
+        # Check each 0 to find the maximum possible island size after flipping
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 0:
+                    adjacent = set()
+                    for dx, dy in directions:
+                        ni, nj = i + dx, j + dy
+                        if 0 <= ni < n and 0 <= nj < n and grid[ni][nj] >= 2:
+                            adjacent.add(grid[ni][nj])
+                    current = 1 + sum(sizes[id] for id in adjacent)
+                    if current > max_size:
+                        max_size = current
+        
+        return max_size
 if __name__=="__main__":
     pass
