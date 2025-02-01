@@ -657,5 +657,14 @@ class Solution:
                         max_size = current
         
         return max_size
+
+    def isArraySpecial(self, nums):
+        # Iterate through each adjacent pair
+        for i in range(len(nums) - 1):
+            # Check if both numbers have the same parity
+            if nums[i] % 2 == nums[i + 1] % 2:
+                return False
+        return True
+
 if __name__=="__main__":
     pass
