@@ -666,5 +666,20 @@ class Solution:
                 return False
         return True
 
+    def check(self, nums):
+        n = len(nums)
+        drop_count = 0
+        
+        for i in range(n):
+            # Check if the current element is greater than the next one.
+            # Use modulo n to wrap around for the last element.
+            if nums[i] > nums[(i + 1) % n]:
+                drop_count += 1
+                # More than one drop means the array is not rotated sorted.
+                if drop_count > 1:
+                    return False
+        
+        return True
+
 if __name__=="__main__":
     pass
