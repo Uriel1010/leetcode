@@ -681,5 +681,34 @@ class Solution:
         
         return True
 
+    def longestMonotonicSubarray(self, nums):
+        if not nums:
+            return 0
+        
+        # Initialize counters for strictly increasing and strictly decreasing subarrays.
+        inc = 1
+        dec = 1
+        max_len = 1
+        
+        # Iterate through the array starting from the second element.
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i-1]:
+                # Extend the strictly increasing subarray
+                inc += 1
+                dec = 1  # Reset the decreasing counter
+            elif nums[i] < nums[i-1]:
+                # Extend the strictly decreasing subarray
+                dec += 1
+                inc = 1  # Reset the increasing counter
+            else:
+                # When equal, neither strictly increasing nor decreasing
+                inc = 1
+                dec = 1
+            
+            # Update the maximum length found so far.
+            max_len = max(max_len, inc, dec)
+        
+        return max_len
+
 if __name__=="__main__":
     pass
