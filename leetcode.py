@@ -730,4 +730,35 @@ class Solution:
         return max_sum
 
 if __name__=="__main__":
-    pass
+    # Explanation of the Functions in This File
+    explanation = """
+=====================================================
+LeetCode Solutions - Explanation of Functions in this File
+=====================================================
+
+1. numRescueBoats: Solves "Boats to Save People" (LeetCode #881) using a two-pointers approach.
+2. partitionString: Solves "Optimal Partition of String" (LeetCode #2405) by partitioning the string into substrings with unique characters.
+3. search: Implements binary search (LeetCode #704) to find a target in a sorted array.
+4. prefixCount: Counts how many strings start with a given prefix (LeetCode #2185).
+5. canConstruct: Determines if a string can be partitioned into k palindromic substrings (LeetCode #1400).
+6. findThePrefixCommonArray: Computes the prefix common array for two arrays (LeetCode #2657).
+7. minimizeXor: Minimizes the XOR difference by adjusting bits (LeetCode #2429).
+8. xorAllNums: Computes the XOR of all pairings between two lists (LeetCode #2575).
+9. minCost: Finds the minimum cost path in a grid using 0-1 BFS (LeetCode #1368).
+10. gridGame: Solves the Grid Game problem (LeetCode #2017) using prefix sums.
+11. eventualSafeNodes: Determines safe nodes in a directed graph (LeetCode #802) using DFS.
+12. lexicographicallySmallestArray: Custom function to form the lexicographically smallest array by grouping and sorting.
+13. maximumInvitations: Solves "Maximum Employees to Be Invited to a Meeting" (LeetCode #2127) using DFS and BFS.
+14. checkIfPrerequisite: Determines prerequisite relationships (LeetCode #1462) via a Floyd–Warshall approach.
+15. findMaxFish: Custom DFS-based solution to find the maximum fish count in a grid.
+16. findRedundantConnection: Detects a redundant connection in a graph (LeetCode #684) using Union-Find.
+17. magnificentSets: Divides graph nodes into the maximum number of groups (LeetCode #2493) using BFS layering.
+18. largestIsland: Computes the largest island size possible by flipping a zero (LeetCode #827).
+19. isArraySpecial: Checks if an array is "special" (LeetCode #3151) by verifying alternating parity.
+20. check: Checks if an array is a rotated sorted array (LeetCode #1752) by counting drop points.
+21. longestMonotonicSubarray: Finds the longest strictly increasing or strictly decreasing subarray (LeetCode #3105).
+22. maxAscendingSum: Computes the maximum ascending subarray sum (LeetCode #1800).
+
+=====================================================
+"""
+    print(explanation)
