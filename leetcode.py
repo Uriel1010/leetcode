@@ -710,5 +710,24 @@ class Solution:
         
         return max_len
 
+    def maxAscendingSum(self, nums):
+        # Initialize the current sum and maximum sum.
+        curr_sum = 0
+        max_sum = 0
+        
+        # Iterate over the numbers in the array.
+        for i, x in enumerate(nums):
+            # If it's the first element or the current element is greater than the previous one,
+            # then add it to the current sum.
+            if i == 0 or x > nums[i-1]:
+                curr_sum += x
+            else:
+                # Otherwise, start a new ascending subarray.
+                curr_sum = x
+            # Update the maximum sum found so far.
+            max_sum = max(max_sum, curr_sum)
+        
+        return max_sum
+
 if __name__=="__main__":
     pass
