@@ -748,6 +748,30 @@ class Solution:
         # Check if swapping the two mismatched characters in one string makes them equal.
         return s1[diff[0]] == s2[diff[1]] and s1[diff[1]] == s2[diff[0]]
 
+    def tupleSameProduct(self, nums):
+        # Dictionary to store the count of each product.
+        product_counts = {}
+        n = len(nums)
+        
+        # Enumerate all pairs (i, j) with i < j and count their product.
+        for i in range(n):
+            for j in range(i + 1, n):
+                product = nums[i] * nums[j]
+                if product in product_counts:
+                    product_counts[product] += 1
+                else:
+                    product_counts[product] = 1
+        
+        result = 0
+        # For each product, if there are k pairs, then we can form
+        # 4 * k * (k - 1) valid tuples.
+        for count in product_counts.values():
+            if count > 1:
+                result += 4 * count * (count - 1)
+        
+        return result
+
+
 if __name__=="__main__":
     # Explanation of the Functions in This File
     explanation = """
