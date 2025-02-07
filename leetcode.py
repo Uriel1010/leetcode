@@ -771,6 +771,40 @@ class Solution:
         
         return result
 
+    def queryResults(self, limit, queries):
+        # Dictionary mapping ball label to its current color.
+        ball_color = {}
+        # Dictionary mapping color to its frequency among the balls.
+        color_freq = {}
+        # List to store the result after each query.
+        results = []
+        
+        # Process each query [x, y]
+        for query in queries:
+            x, y = query[0], query[1]
+            # If ball x is already colored, adjust the frequency of its old color.
+            if x in ball_color:
+                old_color = ball_color[x]
+                if old_color == y:
+                    # If the color is the same, no changes occur.
+                    results.append(len(color_freq))
+                    continue
+                # Decrement frequency for the old color.
+                color_freq[old_color] -= 1
+                if color_freq[old_color] == 0:
+                    del color_freq[old_color]
+            # Update ball x to the new color y.
+            ball_color[x] = y
+            if y in color_freq:
+                color_freq[y] += 1
+            else:
+                color_freq[y] = 1
+            
+            # The number of distinct colors is the number of keys in color_freq.
+            results.append(len(color_freq))
+        
+        return results
+
 
 if __name__=="__main__":
     # Explanation of the Functions in This File
