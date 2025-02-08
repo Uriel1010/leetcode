@@ -805,6 +805,50 @@ class Solution:
         
         return results
 
+class NumberContainers:
+    def __init__(self):
+        # Maps each index to its current number.
+        self.index_to_num = {}
+        # Maps each number to a sorted list of indices that currently hold that number.
+        self.num_to_indices = {}
+
+    def change(self, index: int, number: int) -> None:
+        # If the index already has a number, remove it from that number's list.
+        if index in self.index_to_num:
+            old_number = self.index_to_num[index]
+            lst = self.num_to_indices[old_number]
+            pos = self._bisect_left(lst, index)
+            if pos < len(lst) and lst[pos] == index:
+                lst.pop(pos)
+        # Update the index-to-number mapping.
+        self.index_to_num[index] = number
+        # Add the index into the sorted list for the new number.
+        if number not in self.num_to_indices:
+            self.num_to_indices[number] = []
+        self._insort(self.num_to_indices[number], index)
+
+    def find(self, number: int) -> int:
+        # If the number does not exist or its list is empty, return -1.
+        if number not in self.num_to_indices or len(self.num_to_indices[number]) == 0:
+            return -1
+        # Return the smallest index holding this number.
+        return self.num_to_indices[number][0]
+
+    # Helper function: Binary search to find leftmost insertion point.
+    def _bisect_left(self, lst, target):
+        lo, hi = 0, len(lst)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if lst[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    # Helper function: Insert target into lst at the appropriate position.
+    def _insort(self, lst, target):
+        pos = self._bisect_left(lst, target)
+        lst.insert(pos, target)
 
 if __name__=="__main__":
     # Explanation of the Functions in This File
