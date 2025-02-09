@@ -805,6 +805,24 @@ class Solution:
         
         return results
 
+    def countBadPairs(self, nums):
+        n = len(nums)
+        total_pairs = n * (n - 1) // 2
+        
+        # Dictionary to count frequencies of diff = i - nums[i]
+        diff_freq = {}
+        for i, num in enumerate(nums):
+            diff = i - num
+            diff_freq[diff] = diff_freq.get(diff, 0) + 1
+        
+        good_pairs = 0
+        # For each diff value that appears k times, count the pairs among them.
+        for count in diff_freq.values():
+            good_pairs += count * (count - 1) // 2
+        
+        # Bad pairs are total pairs minus good pairs.
+        return total_pairs - good_pairs
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
