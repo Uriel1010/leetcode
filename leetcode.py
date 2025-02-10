@@ -823,6 +823,23 @@ class Solution:
         # Bad pairs are total pairs minus good pairs.
         return total_pairs - good_pairs
 
+    def clearDigits(self, s):
+        # Continue processing until there is no digit in s.
+        while any(c.isdigit() for c in s):
+            # Find the first digit in s.
+            for i, ch in enumerate(s):
+                if ch.isdigit():
+                    # Find the closest non-digit character to its left.
+                    j = i - 1
+                    while j >= 0 and s[j].isdigit():
+                        j -= 1
+                    # According to the problem guarantee, a non-digit exists.
+                    # Remove the character at j and the digit at i.
+                    s = s[:j] + s[j+1:i] + s[i+1:]
+                    # Break out of the for-loop since s has changed.
+                    break
+        return s
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
