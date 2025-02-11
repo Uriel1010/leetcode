@@ -840,6 +840,22 @@ class Solution:
                     break
         return s
 
+    def removeOccurrences(self, s, part):
+        part_list = list(part)  # Convert part to a list for fast comparison.
+        part_len = len(part)
+        stack = []  # This will hold the characters of the current result.
+        
+        for c in s:
+            stack.append(c)
+            # If the stack ends with the part, remove that occurrence.
+            if len(stack) >= part_len and stack[-part_len:] == part_list:
+                # Remove last part_len characters.
+                for _ in range(part_len):
+                    stack.pop()
+        
+        # Reconstruct the string from the stack.
+        return "".join(stack)
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
