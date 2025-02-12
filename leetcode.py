@@ -856,6 +856,41 @@ class Solution:
         # Reconstruct the string from the stack.
         return "".join(stack)
 
+    def maximumSum(self, nums):
+        # Helper function to compute the sum of digits of a number.
+        def digit_sum(n: int) -> int:
+            s = 0
+            while n:
+                s += n % 10
+                n //= 10
+            return s
+        
+        # Dictionary mapping a digit sum to the two largest numbers
+        # that have that digit sum. For each key, we store a list [max1, max2],
+        # where max1 is the largest and max2 is the second largest.
+        best = {}
+        res = -1
+        
+        for num in nums:
+            d = digit_sum(num)
+            if d not in best:
+                best[d] = [num, -1]  # Initialize with current number and a placeholder.
+            else:
+                if num > best[d][0]:
+                    best[d][1] = best[d][0]  # Previous maximum becomes second maximum.
+                    best[d][0] = num         # Update maximum.
+                elif num > best[d][1]:
+                    best[d][1] = num
+        
+        # For each digit sum, if we have two or more numbers, update the result.
+        for d in best:
+            if best[d][1] != -1:
+                candidate = best[d][0] + best[d][1]
+                if candidate > res:
+                    res = candidate
+        
+        return res
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
