@@ -891,6 +891,76 @@ class Solution:
         
         return res
 
+    def minOperations(self, nums, k):
+        # Build a custom min-heap from the list.
+        self.heap = nums[:]  # make a copy to avoid modifying the original list
+        self.build_heap()
+        operations = 0
+
+        # Continue operations until the smallest element is >= k.
+        while self.heap[0] < k:
+            # We need at least two elements to perform an operation.
+            if len(self.heap) < 2:
+                return -1  # Per problem constraints, this won't happen.
+            x = self.heappop()
+            y = self.heappop()
+            new_val = 2 * x + y  # Since x <= y
+            self.heappush(new_val)
+            operations += 1
+
+        return operations
+
+    # Build the heap in-place in O(n) time.
+    def build_heap(self):
+        n = len(self.heap)
+        # Start from the last non-leaf node down to the root.
+        for i in range(n // 2 - 1, -1, -1):
+            self._siftdown(i)
+
+    # Sift down the element at index i.
+    def _siftdown(self, i):
+        n = len(self.heap)
+        while True:
+            left = 2 * i + 1
+            right = 2 * i + 2
+            smallest = i
+            if left < n and self.heap[left] < self.heap[smallest]:
+                smallest = left
+            if right < n and self.heap[right] < self.heap[smallest]:
+                smallest = right
+            if smallest != i:
+                self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
+                i = smallest
+            else:
+                break
+
+    # Remove and return the smallest element (the root of the heap).
+    def heappop(self):
+        n = len(self.heap)
+        if n == 0:
+            return None
+        root = self.heap[0]
+        last = self.heap.pop()
+        if n > 1:
+            self.heap[0] = last
+            self._siftdown(0)
+        return root
+
+    # Push a new value into the heap.
+    def heappush(self, value):
+        self.heap.append(value)
+        self._siftup(len(self.heap) - 1)
+
+    # Sift up the element at index i.
+    def _siftup(self, i):
+        while i > 0:
+            parent = (i - 1) // 2
+            if self.heap[i] < self.heap[parent]:
+                self.heap[i], self.heap[parent] = self.heap[parent], self.heap[i]
+                i = parent
+            else:
+                break
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
