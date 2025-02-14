@@ -1027,7 +1027,7 @@ class ProductOfNumbers:
         # Otherwise, return the product of the last k numbers.
         return self.prefix[-1] // self.prefix[-1 - k]
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # Explanation of the Functions in This File
     explanation = """
 =====================================================
