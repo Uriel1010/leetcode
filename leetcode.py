@@ -1006,6 +1006,27 @@ class NumberContainers:
         pos = self._bisect_left(lst, target)
         lst.insert(pos, target)
 
+class ProductOfNumbers:
+    def __init__(self):
+        # Initialize the prefix list with a dummy value 1.
+        self.prefix = [1]
+
+    def add(self, num: int) -> None:
+        if num == 0:
+            # Reset the prefix when a zero is added.
+            self.prefix = [1]
+        else:
+            # Append the product of the current number with the last value.
+            self.prefix.append(self.prefix[-1] * num)
+
+    def getProduct(self, k: int) -> int:
+        # If k is greater than or equal to the length of prefix, 
+        # then there is a zero in the last k numbers.
+        if k >= len(self.prefix):
+            return 0
+        # Otherwise, return the product of the last k numbers.
+        return self.prefix[-1] // self.prefix[-1 - k]
+
 if __name__=="__main__":
     # Explanation of the Functions in This File
     explanation = """
