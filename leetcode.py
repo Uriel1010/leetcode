@@ -961,6 +961,47 @@ class Solution:
             else:
                 break
 
+    def punishmentNumber(self, n):
+        # Helper function to check if s can be partitioned so that the sum equals target.
+        def can_partition(s: str, target: int) -> bool:
+            memo = {}
+            
+            # dfs(index, current_sum): whether from s[index:] we can achieve a total sum equal to target - current_sum.
+            def dfs(index, current_sum):
+                # When we've used all digits, check if the sum is exactly target.
+                if index == len(s):
+                    return current_sum == target
+                # Use memoization to avoid recomputation.
+                if (index, current_sum) in memo:
+                    return memo[(index, current_sum)]
+                
+                total = 0
+                # Try every possible partition starting at index.
+                for j in range(index, len(s)):
+                    # Build the number from s[index:j+1].
+                    total = total * 10 + (ord(s[j]) - ord('0'))
+                    # If adding this number exceeds target, no need to continue further.
+                    if current_sum + total > target:
+                        break
+                    # Recursively check if the remaining string can sum up to target.
+                    if dfs(j + 1, current_sum + total):
+                        memo[(index, current_sum)] = True
+                        return True
+                
+                memo[(index, current_sum)] = False
+                return False
+            
+            return dfs(0, 0)
+        
+        punishment = 0
+        # For each i from 1 to n, check the condition.
+        for i in range(1, n + 1):
+            square = i * i
+            s = str(square)
+            if can_partition(s, i):
+                punishment += square
+        return punishment
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
