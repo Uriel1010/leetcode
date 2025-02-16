@@ -1002,6 +1002,46 @@ class Solution:
                 punishment += square
         return punishment
 
+    def constructDistancedSequence(self, n):
+        length = 2 * n - 1
+        res = [-1] * length
+        # used[i] indicates if number i has been placed.
+        used = [False] * (n + 1)
+        
+        def backtrack(index):
+            if index == length:
+                return True
+            # If position is already filled, skip to next.
+            if res[index] != -1:
+                return backtrack(index + 1)
+            # Try placing numbers from n down to 1 (largest first)
+            for i in range(n, 0, -1):
+                if used[i]:
+                    continue
+                if i == 1:
+                    # Place 1 at the current index.
+                    res[index] = 1
+                    used[1] = True
+                    if backtrack(index + 1):
+                        return True
+                    res[index] = -1
+                    used[1] = False
+                else:
+                    # For i >= 2, check if we can place i at index and index + i.
+                    if index + i < length and res[index] == -1 and res[index + i] == -1:
+                        res[index] = i
+                        res[index + i] = i
+                        used[i] = True
+                        if backtrack(index + 1):
+                            return True
+                        res[index] = -1
+                        res[index + i] = -1
+                        used[i] = False
+            return False
+        
+        backtrack(0)
+        return res
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
