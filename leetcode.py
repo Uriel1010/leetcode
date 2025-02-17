@@ -1042,6 +1042,29 @@ class Solution:
         backtrack(0)
         return res
 
+    def numTilePossibilities(self, tiles):
+        # Build frequency dictionary for the tiles.
+        freq = {}
+        for ch in tiles:
+            freq[ch] = freq.get(ch, 0) + 1
+        
+        # Recursive helper function that returns the number of sequences
+        # that can be formed using the remaining letters.
+        def dfs():
+            count = 0
+            for ch in freq:
+                if freq[ch] > 0:
+                    # Use one occurrence of ch.
+                    freq[ch] -= 1
+                    # Each choice contributes one sequence (the one just formed)
+                    # plus any sequence that can be formed subsequently.
+                    count += 1 + dfs()
+                    # Backtrack.
+                    freq[ch] += 1
+            return count
+        
+        return dfs()
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
