@@ -1065,6 +1065,25 @@ class Solution:
         
         return dfs()
 
+    def smallestNumber(self, pattern):
+        n = len(pattern)
+        res = []
+        stack = []
+        
+        # We need to place digits 1 to n+1.
+        for i in range(n + 1):
+            # Always push the next digit (as a string) onto the stack.
+            stack.append(str(i + 1))
+            
+            # If we are at the end of the pattern or the current character is 'I',
+            # pop all elements from the stack and append them to the result.
+            if i == n or pattern[i] == 'I':
+                while stack:
+                    res.append(stack.pop())
+                    
+        return ''.join(res)
+
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
