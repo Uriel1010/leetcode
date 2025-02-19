@@ -1083,6 +1083,35 @@ class Solution:
                     
         return ''.join(res)
 
+    def getHappyString(self, n, k):
+        # List to hold valid characters
+        chars = ['a', 'b', 'c']
+        
+        # Result container
+        result = []
+        
+        # Helper function for backtracking
+        def backtrack(curr_str):
+            # If the length of current string equals n, check if it's the k-th string
+            if len(curr_str) == n:
+                result.append(curr_str)
+                return
+            
+            # Try adding each character to the string, ensuring no adjacent same characters
+            for char in chars:
+                if len(curr_str) == 0 or curr_str[-1] != char:
+                    backtrack(curr_str + char)
+        
+        # Start the backtracking to fill the result list
+        backtrack("")
+        
+        # Return the k-th lexicographically smallest string, or empty string if k is out of bounds
+        if k > len(result):
+            return ""
+        else:
+            return result[k - 1]
+
+
 
 class NumberContainers:
     def __init__(self):
