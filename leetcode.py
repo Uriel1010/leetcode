@@ -1111,6 +1111,16 @@ class Solution:
         else:
             return result[k - 1]
 
+    def findDifferentBinaryString(self, nums):
+        n = len(nums)
+        result = []
+        for i in range(n):
+            # Flip the i-th character of the i-th string.
+            if nums[i][i] == '0':
+                result.append('1')
+            else:
+                result.append('0')
+        return ''.join(result)
 
 
 class NumberContainers:
