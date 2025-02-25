@@ -1122,6 +1122,23 @@ class Solution:
                 result.append('0')
         return ''.join(result)
 
+    def numOfSubarrays(self, arr):
+        mod = 10**9 + 7
+        prefix = 0
+        even = 1  # Count of even prefix sums (initially 0 is even)
+        odd = 0   # Count of odd prefix sums
+        result = 0
+        
+        for x in arr:
+            prefix = (prefix + x) % 2  # Update prefix parity
+            if prefix == 0:
+                result = (result + odd) % mod  # Even - odd gives odd sum
+                even += 1
+            else:
+                result = (result + even) % mod  # Odd - even gives odd sum
+                odd += 1
+                
+        return result
 
 class NumberContainers:
     def __init__(self):
