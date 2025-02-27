@@ -1140,6 +1140,26 @@ class Solution:
                 
         return result
 
+    def lenLongestFibSubseq(self, arr):
+        n = len(arr)
+        # Map each value to its index.
+        index = {val: i for i, val in enumerate(arr)}
+        dp = {}
+        ans = 0
+        
+        # Iterate over all pairs (j, k) with j < k.
+        for k in range(n):
+            for j in range(k):
+                # Look for i such that arr[i] = arr[k] - arr[j].
+                i_val = arr[k] - arr[j]
+                i = index.get(i_val)
+                # i must exist and i < j to form a valid sequence.
+                if i is not None and i < j:
+                    dp[(j, k)] = dp.get((i, j), 2) + 1
+                    ans = max(ans, dp[(j, k)])
+        
+        return ans if ans >= 3 else 0
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
