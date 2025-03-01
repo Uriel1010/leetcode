@@ -1160,6 +1160,27 @@ class Solution:
         
         return ans if ans >= 3 else 0
 
+    def applyOperations(self, nums):
+        n = len(nums)
+        # Apply the operations on adjacent elements.
+        for i in range(n - 1):
+            if nums[i] == nums[i + 1]:
+                nums[i] *= 2
+                nums[i + 1] = 0
+        
+        # Shift non-zero elements to the front, preserving their order.
+        j = 0
+        for i in range(n):
+            if nums[i] != 0:
+                nums[j] = nums[i]
+                j += 1
+        
+        # Fill the rest with zeros.
+        for i in range(j, n):
+            nums[i] = 0
+        
+        return nums
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
