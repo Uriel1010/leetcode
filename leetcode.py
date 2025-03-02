@@ -1181,6 +1181,35 @@ class Solution:
         
         return nums
 
+    def mergeArrays(self, nums1, nums2):
+        i, j = 0, 0
+        result = []
+        
+        # Use two pointers to traverse both lists.
+        while i < len(nums1) and j < len(nums2):
+            id1, val1 = nums1[i]
+            id2, val2 = nums2[j]
+            if id1 == id2:
+                result.append([id1, val1 + val2])
+                i += 1
+                j += 1
+            elif id1 < id2:
+                result.append([id1, val1])
+                i += 1
+            else:
+                result.append([id2, val2])
+                j += 1
+        
+        # Append any remaining elements.
+        while i < len(nums1):
+            result.append(nums1[i])
+            i += 1
+        while j < len(nums2):
+            result.append(nums2[j])
+            j += 1
+        
+        return result
+
 class NumberContainers:
     def __init__(self):
         # Maps each index to its current number.
